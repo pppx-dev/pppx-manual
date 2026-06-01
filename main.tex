@@ -1,0 +1,74 @@
+%% Overleaf
+%% Software Manual and Technical Document Template
+%%
+%% This provides an example of a software manual created in Overleaf.
+
+\documentclass{softwaremanual}
+
+% Packages used in this example
+\usepackage{graphicx}  % for including images
+\usepackage{microtype} % for typographical enhancements
+\usepackage{minted}    % for code listings
+\usepackage{amsmath}   % for equations and mathematics
+\setminted{style=friendly,fontsize=\small}
+\usepackage[english]{babel}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{subcaption, ragged2e}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+% \usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
+\usepackage[a4paper,top=2.54cm,bottom=2.54cm,left=3.17cm,right=3.17cm]{geometry} % for setting page size and margins
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+% Custom macros used in this example document
+\newcommand{\doclink}[2]{\href{#1}{#2}\footnote{\url{#1}}}
+\newcommand{\cs}[1]{\texttt{\textbackslash #1}}
+% \renewcommand{\listoflistingscaption}{List of Code Listings}
+\def\pppx{\texttt{pppx}}
+% \newcommand{\pppxversion}{1.2.1}
+
+% Frontmatter data; appears on title page
+\title{PPPx User Manual}
+\version{1.2.4}
+\author{Yuanxin Pan}
+\softwarelogo{\includegraphics[width=8cm]{figs/logo}}
+
+\begin{document}
+
+\maketitle
+
+\pagenumbering{roman}
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\include{src/01_introduction}
+
+\include{src/02_getting_started}
+
+\include{src/03_usage}
+
+\include{src/04_examples}
+
+\include{src/05_troubleshooting}
+
+\include{src/06_FAQs}
+
+\appendix
+\include{src/07_appendix}
+
+% \listoflistings
+
+\end{document}

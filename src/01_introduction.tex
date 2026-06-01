@@ -1,0 +1,41 @@
+\section{Introduction}
+
+% This document is an example of a software manual created using \LaTeX\ and Overleaf. It provides a nice clean format for producing this type of technical document. 
+
+% To change the logo shown on the front page, simply upload your own logo image file (via the file-tree menu) to replace the default logo.pdf file. 
+
+% Once you're familiar with the editor, you can find various project settings in the Overleaf menu, accessed via the button in the very top left of the editor. To view tutorials, user guides, and further documentation, please visit our \doclink{https://www.overleaf.com/learn}{help library}. If you haven't used \LaTeX\ before, our \doclink{https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes}{Learn \LaTeX\ in 30 minutes} tutorial is an excellent place to start.
+
+% \subsection{Purpose of the software}
+
+
+\subsection{Overview}
+
+PPPx is a software package developed for multi-GNSS data processing. Its main component \pppx{}, dedicated to multi-GNSS positioning, is introduced in this manual. Its primary features are listed below:
+\begin{enumerate}
+    \item Supports four solution modes:
+    \begin{enumerate}
+        \item SPP: Single Point Positioning
+        \item PPP: Precise Point Positioning
+        \item RTK: short baseline processing
+        \item TDP: Time-Differenced Positioning
+    \end{enumerate}
+
+    \item Supports multi-GNSS: GPS, GLONASS, Galileo, Beidou-2/3, and QZSS
+    \item Supports multiple solvers: Extended Kalman Filter (EKF), Factor Graph Optimization (FGO), and Least-Squares Estimator (LSQ)
+    \item Supports PPP-AR with Observable-specific Signal Bias (OSB) products
+    \item Flexible frequency selection (L1/L2/E1/E5a/...)
+    \item High precision and efficiency: capable of processing 2880 epochs within 1--2 s
+    \item Unified input/output for different solution modes
+    \item Supports Linux, Windows, and macOS
+\end{enumerate}
+
+% NOTE: Kinematic GNSS data collected on moving vehicles are not tested with \pppx{} yet.
+
+% You may ask: \textbf{Why should I used \pppx{} for GNSS data processing?}
+
+% Ans: Compared to other software, \pppx{} is easy to use, high-precision and computation efficient.
+
+\subsection{License}
+
+This software is distributed under the \href{https://www.gnu.org/licenses/gpl-3.0.en.html}{GPL-3.0} license.

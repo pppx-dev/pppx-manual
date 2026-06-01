@@ -1,0 +1,180 @@
+\section{Getting started}
+
+In this section, the system requirements and installation steps for \pppx{} on different platforms (Linux, macOS, and Windows) are introduced. 
+
+%To download the latest version of \pppx{}, please have a look on \href{https://github.com/YuanxinPan/PPPx_bin/releases}{this page}. Note that only the dynamically linked version of \pppx{} is provided for macOS and Windows, but a statically linked version called \texttt{pppx\_static} is additionally provided for Linux.
+
+
+
+\subsection{System requirements}
+
+Generally, there is no specific hardware requirement for \pppx{}. To process a 24-hour GNSS observation file with a sampling rate of 30 s, \pppx{} consumes around 150 MB of resident memory and 1 CPU core. However, resident memory consumed may change with the number of GNSS systems used and the data sampling rate.
+
+Note that \pppx{} only supports Macs with Apple silicon (i.e., ARM architecture) and an OS version higher than Monterey.
+
+
+
+\subsection{Installation}
+
+\subsubsection{Linux}
+\label{sec:installation_linux}
+
+This application is distributed as an \href{https://appimage.org/}{AppImage}, making it portable across most modern Linux distributions. Specifically, \pppx{} is built on Ubuntu 20.04 and it requires the host system to have GNU C Library (\texttt{glibc}) version 2.31 or newer.
+
+It is compatible with the following distributions (and any of their derivatives):
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{0.35\textwidth} p{0.55\textwidth}}
+    \hline
+    Distribution Family & Supported Versions \\ 
+    \hline
+    Ubuntu & 20.04 LTS, 22.04 LTS, 24.04 LTS (and newer) \\ 
+    Linux Mint & 20, 21, 22 (and newer) \\ 
+    Debian & 11 ``Bullseye'', 12 ``Bookworm'' (and newer) \\ 
+    Fedora & 32 (and newer) \\ 
+    RHEL / Rocky / Alma & 9.x (and newer) \newline \textit{Note: RHEL 8 is not supported} \\ 
+    openSUSE & Leap 15.3+, Tumbleweed \\ 
+    Arch Linux / Manjaro & Rolling releases (Always updated) \\ 
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\textit{\textbf{Not sure if your system is supported?}}
+
+You can easily check your system's \texttt{glibc} version by running the \texttt{ldd --version} command in your terminal.
+
+
+\paragraph{Option 1: Automated Installation (Recommended)}
+
+Run this single command to automatically download and install the latest release to \verb|~/.local/bin|:
+
+\begin{minted}[frame=leftline]{bash}
+curl -sL https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.sh | bash
+\end{minted}
+
+
+\paragraph{Option 2: Manual Installation}
+
+If you prefer not to use the automated script, you can install \pppx{} manually:
+\begin{enumerate}
+    \item Download the \texttt{pppx\_v1.x.x\_linux\_x86\_64.zip} asset from the latest \href{https://github.com/YuanxinPan/PPPx_bin/releases}{Release}.
+    \item Extract the archive to obtain the \pppx{} executable.
+    \item Open your terminal and navigate to your download folder.
+    \item Make the file executable and move it to your user binary folder:
+\end{enumerate}
+
+\begin{minted}[frame=leftline]{bash}
+chmod +x pppx
+mkdir -p ~/.local/bin
+mv pppx ~/.local/bin/pppx
+
+# Restart your terminal and run `pppx` to test if it works
+# If not, add `~/.local/bin` to PATH via the command below:
+echo "export PATH=\${HOME}/.local/bin:\$PATH" >> ~/.bashrc
+\end{minted}
+
+
+
+\subsubsection{Windows}
+\label{sec:installation_windows}
+
+The easiest way to run \pppx{} on Windows is using the Windows Subsystem for Linux (WSL). Please follow the instructions in Section~\ref{sec:installation_linux}. 
+However, \pppx{} can also run natively on Windows using PowerShell or Command Prompt (\texttt{cmd.exe}).
+
+
+\paragraph{Option 1: Automated Installation (Recommended)}
+
+Open PowerShell and run this command. It will automatically download the executable, fetch the required DLLs, and add the software (\path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}) to your system \texttt{PATH}:
+
+\begin{minted}[frame=leftline]{bash}
+irm https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.ps1 | iex
+\end{minted}
+
+\textbf{Note}: You must restart PowerShell or cmd.exe after the installation.
+
+
+\paragraph{Option 2: Manual Installation}
+
+If you prefer not to use the automated script, you can install \pppx{} manually:
+\begin{enumerate}
+    \item Download \texttt{pppx\_v1.x.x\_windows\_x86\_64.zip} from the latest \href{https://github.com/YuanxinPan/PPPx_bin/releases}{Release}.
+    \item Download the required Windows DLLs via this \href{https://github.com/YuanxinPan/PPPx_bin/releases/download/v1.2.1/pppx_winows_dlls.zip}{link}.
+    \item Create the PPPx folder: \path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}
+    \item Extract both archives and place the \texttt{.dll} files and \texttt{pppx.exe} in the PPPx folder.
+    \item Add the absolute path of this folder to your Windows \texttt{PATH} environment variable.
+    \item Open PowerShell or Command Prompt and type \texttt{pppx.exe} to test if it is correctly installed.
+\end{enumerate}
+
+
+% \paragraph{With MSYS2}
+
+% It is recommended to use \pppx{} on Windows 10 or higher.
+
+% % For Windows 7 or 8 users, please refer to \href{https://www.msys2.org/docs/windows_support/}{this page} to install a old version of \texttt{MSYS2} for software installation.
+
+% If you don't have \texttt{MSYS2} installed on your PC yet, please install it according to \href{https://www.msys2.org}{this page}.
+
+% Then, open \texttt{MSYS2 MINGW64} and run the following comands:
+% \begin{minted}[frame=leftline]{bash}
+%   $ pacman -Syu   # update package library
+%   $ pacman -S git mingw-w64-x86_64-ceres-solver
+
+%   $ git clone git@github.com:YuanxinPan/PPPx_bin.git
+%   $ mkdir -p ${HOME}/.local/bin/
+%   $ cp pppx.exe ${HOME}/.local/bin/
+% \end{minted}
+
+
+
+\subsubsection{macOS}
+\label{sec:installation_macos}
+
+\pppx{} only supports Macs with Apple silicon and an OS version higher than Monterey.
+
+
+\paragraph{Prerequisite}
+
+If you do not have \href{https://brew.sh/}{Homebrew} on your Mac, please install it first:
+
+\begin{minted}[breaklines, frame=leftline]{bash}
+  $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+\end{minted} 
+
+\pppx{} is linked against the latest \texttt{ceres-solver} library. Make sure you have installed the latest version as well in order to run \pppx{} properly on your Mac. Run the following command in the Terminal application:
+
+\begin{minted}[frame=leftline]{bash}
+brew install ceres-solver
+\end{minted}
+
+
+\paragraph{Option 1: Automated Installation (Recommended)}
+Run this command in your Terminal to automatically download the latest release, bypass Apple's quarantine security check, and install it to \verb|~/.local/bin/|:
+
+\begin{minted}[frame=leftline]{bash}
+curl -sL https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.sh | bash
+\end{minted}
+
+
+\paragraph{Option 2: Manual Installation}
+
+If you prefer not to use the automated script, you can install \pppx{} manually:
+\begin{enumerate}
+    \item Download the \texttt{pppx\_v1.x.x\_macos\_arm64.zip} asset from the latest \href{https://github.com/YuanxinPan/PPPx_bin/releases}{Release}.
+    \item Extract the archive to obtain the \pppx{} executable.
+    \item Open the Terminal application and navigate to your download folder.
+    \item Move the \pppx{} executable to \verb|~/.local/bin/| using Terminal:
+
+\begin{minted}[frame=leftline]{bash}
+chmod +x pppx
+mkdir -p ~/.local/bin
+mv pppx ~/.local/bin/
+
+echo "export PATH=\${HOME}/.local/bin:\$PATH" >> ~/.zshrc
+\end{minted}
+
+    \item Due to Apple's Gatekeeper security settings, you must authorize the software before it will run. You can do this by running \texttt{xattr -d com.apple.quarantine \char`\~/.local/bin/pppx} or by following this \href{https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac}{Apple Support Guide}.
+    \item Restart your Terminal and run \pppx{} to test if it is correctly installed.
+\end{enumerate}

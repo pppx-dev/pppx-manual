@@ -1,0 +1,71 @@
+\section{File Download}
+
+\subsection{Download GNSS observations}
+
+\begin{enumerate}
+    \item CDDIS: \url{https://cddis.nasa.gov/archive/gnss/data}
+    \item EPN: \url{ftp://ftp.epncb.oma.be/pub/obs}
+    \item PBO: \url{https://data.unavco.org/archive/gnss/}
+    \item GA: \url{https://data.gnss.ga.gov.au/docs/home/gnss-data.html}
+    \item Curtin: \url{http://saegnss2.curtin.edu/ldc}
+    \item Hongkong: \url{https://rinex.geodetic.gov.hk}
+    % \item NGS: \url{https://noaa-cors-pds.s3.amazonaws.com/rinex}
+\end{enumerate}
+
+
+
+\subsection{Download IGS Products}
+
+The following HTTP sites are available for downloading GNSS products:
+\begin{enumerate}
+    \item CDDIS: \url{https://cddis.nasa.gov/archive/gnss/}
+    \item CODE: \url{http://ftp.aiub.unibe.ch/CODE_MGEX/CODE/}
+    \item ESA: \url{http://navigation-office.esa.int/products/gnss-products/}
+    \item CNES: \url{http://www.ppp-wizard.net/daily.html}
+\end{enumerate}
+
+
+FTP sites:
+\begin{enumerate}
+    \item CDDIS: \url{ftps://gdc.cddis.eosdis.nasa.gov/gnss/}
+    \item CODE: \url{ftp://ftp.aiub.unibe.ch/CODE_MGEX/CODE/}
+    \item WHU: \url{ftp://igs.gnsswhu.cn/pub/}
+    \item IGN: \url{ftp://igs.ign.fr/pub/igs}
+\end{enumerate}
+
+Other products:
+\begin{enumerate}
+    \item VMF1: \url{http://vmf.geo.tuwien.ac.at/trop_products/GRID/2.5x2/VMF1/VMF1_OP/}
+\end{enumerate}
+
+
+
+\subsection{Download Table Files}
+\label{app:table}
+
+\paragraph{Ocean tide loading} \mbox{} \newline
+% \href{http://holt.oso.chalmers.se/loading/index-aside-2404271219.html}{Old portal}
+
+Old portal: \url{http://holt.oso.chalmers.se/loading/index-aside-2404271219.html}
+
+New portal: \url{https://barre.oso.chalmers.se/loading/l.php}
+
+Here, we use the old portal to download oceanload coefficients.
+
+\begin{enumerate}
+    \item Ocean tide model -> select \textbf{"FES2004"}
+    \item Keep other options as default values
+    \item Enter the station list: either XYZ or BLH
+    \item Enter an email address and click \textbf{"Submit"}
+\end{enumerate}
+
+The required oceanload coefficients will be sent to you by email, and then you need to append the coefficients to the table file "table/oceanload".
+
+
+\paragraph{ANTEX} \mbox{} \newline
+\url{https://files.igs.org/pub/station/general}
+
+
+
+% \paragraph{Reference} \mbox{} \newline
+% \url{https://github.com/zhouforme0318/GAMPII-GOOD/tree/master/doc}
