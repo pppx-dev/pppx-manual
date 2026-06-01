@@ -39,7 +39,8 @@
 
 % Frontmatter data; appears on title page
 \title{PPPx User Manual}
-\version{1.2.4}
+\version{1.2.4} % fallback version for Overleaf/local builds
+\IfFileExists{version.tex}{\input{version.tex}}{}
 \author{Yuanxin Pan}
 \softwarelogo{\includegraphics[width=8cm]{figs/logo}}
 
