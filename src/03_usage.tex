@@ -1,11 +1,13 @@
 \section{Usage}
 \label{sec:usage}
 
-In this section, the usage of the \pppx{} software is introduced. The general steps to run \pppx{} are:
+This section introduces how to use the \pppx{} software. The general steps to run \pppx{} are:
 \begin{enumerate}
-    \item Prepare input files, including a GNSS observation file in the Receiver Independent Exchange (RINEX) format and necessary products (either broadcast ephemeris or precise products from IGS)
+    \item Prepare input files, including a GNSS observation file in the Receiver Independent
+          Exchange (RINEX) format and necessary products
+          (either broadcast ephemeris or precise products from IGS)
     \item Modify the configuration file \textit{pppx.ini} if necessary
-    \item Execute pppx with command line: \newline
+    \item Execute \pppx{} from the command line: \newline
     \texttt{pppx -c pppx.ini path-to-rnxobs [rnxobs-of-base]}
     \item Check output files
 \end{enumerate}
@@ -21,15 +23,19 @@ Here are some example commands to run \pppx{}:
   $ pppx -c pppx.ini rinex/ZIM200CHE_R_20221000000_01D_30S_MO.rnx rinex/ZIMM00CHE_R_20221000000_01D_30S_MO.rnx
 \end{minted}
 
-To make GNSS data processing easier, a wrapper script (scripts/pppx.sh) is provided to automatically download necessary products (e.g., SP3, CLK, OBX, BIA, ERP, BRDC, and GIM) from the \href{ftp://ftp.aiub.unibe.ch/CODE}{CODE} ftp server and invoke \pppx{} afterwards. The recommended steps to use this wrapper script:
+To make GNSS data processing easier, a wrapper script (scripts/pppx.sh) is provided that
+automatically downloads the necessary products (e.g., SP3, CLK, OBX, BIA, ERP, BRDC, and GIM)
+from the \href{ftp://ftp.aiub.unibe.ch/CODE}{CODE} FTP server and then invokes \pppx{}.
+The recommended steps to use this wrapper script are:
 \begin{minted}[breaklines, frame=leftline]{bash}
   $ pppx -x ppp > pppx.ini  # generate a default config file
-  
+
   # Then, edit pppx.ini if necessary but keep [product] (except "src") and [table] blank
   $ pppx.sh -c pppx.ini rinex/ZIM200CHE_R_20221000000_01D_30S_MO.rnx
 \end{minted}
 
-\textbf{NOTE}: "scripts/pppx.sh" should be manually edited and the variable "TABLE\_DIR" (line \#42) should be set to the actual "table" folder of the \pppx{} software package before first use.
+\textbf{NOTE}: Before first use, "scripts/pppx.sh" must be edited manually, setting the variable
+"TABLE\_DIR" (line \#42) to the actual "table" folder of the \pppx{} software package.
 
 
 
@@ -51,7 +57,9 @@ The configuration file and satellite products will be explained in detail in sub
 \subsubsection{Configuration}
 \label{sec:input_configuration}
 
-The configuration file \texttt{pppx.ini} is the main interface of the software \pppx{}. It is written in the \texttt{ini} format and is human-readable. Users can specify general GNSS positioning strategies (Table~\ref{tab:config}) with it.
+The configuration file \texttt{pppx.ini} is the primary interface to \pppx{}.
+Written in the human-readable \texttt{ini} format, it lets users specify the GNSS positioning
+strategy through the sections listed in Table~\ref{tab:config}.
 
 \begin{table}[!hbt]
     \centering
@@ -74,7 +82,10 @@ The configuration file \texttt{pppx.ini} is the main interface of the software \
     \end{tabular}}
 \end{table}
 
-Some example configuration files are provided in the folder "example/pppx/". Most settings in \texttt{pppx.ini} are self-explanatory. Usually, users just need to modify the following settings and keep the rest as default:
+Some example configuration files are provided in the folder "example/pppx/".
+Most settings in \texttt{pppx.ini} are self-explanatory.
+Usually, users just need to modify the following settings
+and leave the rest at their default values:
 
 \begin{minted}[frame=leftline]{ini}
 [constellation]: system
@@ -82,7 +93,10 @@ Some example configuration files are provided in the folder "example/pppx/". Mos
 [product]: src, nav, sp3, clk
 \end{minted}
 
-When a template configuration file is not available, you can run the following command to get solution mode-specific (including spp, ppp, rtk, and tdp) default configurations. By redirecting the output to a file, you can modify the configuration and use it for data processing with \pppx{}.
+If no template configuration file is available, you can generate a default configuration for a
+specific solution mode (spp, ppp, rtk, or tdp) with the command below.
+Redirect its output to a file to obtain a ready-to-edit configuration
+for processing data with \pppx{}.
 
 \begin{minted}[frame=leftline]{bash}
   # Output the default configurations for SPP and redirect them to a file
@@ -111,14 +125,23 @@ When a template configuration file is not available, you can run the following c
 % ; ztd_pri is also valid for FGO-based PPP
 % \end{minted}
 
-The following paragraphs demonstrate how to set the "key-value" pair for each section of the configuration file.
+The following paragraphs explain how to set the key--value pairs in each section of the
+configuration file.
 
 
 \paragraph{session}
 
-Here, \underline{"interval"} specifies the required interval for data processing, it should be no smaller than the sampling rate of the RINEX file and must be an integer multiple of it. \underline{"date"} denotes the year and day of year (DOY) for data processing, and it will be used to replace the placeholders in the "[product]" section. By default, it can be read from the first epoch of the RINEX file. \underline{"start"} and \underline{"end"} denote the start and end epoch for data processing within the day (closed interval).
+Here, \underline{"interval"} specifies the processing interval; it must be no smaller than the
+sampling rate of the RINEX file and an integer multiple of it.
+\underline{"date"} denotes the year and day of year (DOY) for data processing
+and is used to replace the placeholders in the "[product]" section.
+If left blank, it is read from the first epoch of the RINEX file.
+\underline{"start"} and \underline{"end"} denote the start and end epochs for data processing
+within the day (closed interval).
 
-A screenshot of the example settings is shown in Figure~\ref{fig:conf_session}. Note that this figure shows how to correctly configure these fields. Usually, users can leave all the fields in this section blank. Then, \pppx{} will process the whole RINEX file epoch by epoch. 
+Figure~\ref{fig:conf_session} shows example settings.
+In most cases, all fields in this section can be left blank,
+and \pppx{} will then process the entire RINEX file epoch by epoch.
 
 \begin{figure}[!hbt]
     \centering
@@ -131,7 +154,13 @@ A screenshot of the example settings is shown in Figure~\ref{fig:conf_session}. 
 
 \paragraph{constellation}
 
-This section defines the GNSS systems to be used for data processing and the problematic satellites to be excluded. An example is shown in Figure~\ref{fig:conf_constellation}. Note that the order of letters (i.e., GRECJ) does not matter, and there should be no space between them. The GPS system is not mandatory; for example, Galileo-only solutions are also feasible. The excluded PRNs should be separated by white space.
+This section defines the GNSS systems to be used for data processing
+and the problematic satellites to be excluded.
+An example is shown in Figure~\ref{fig:conf_constellation}.
+Note that the order of the letters (e.g., GRECJ) does not matter,
+and there must be no spaces between them.
+The GPS system is not mandatory; Galileo-only solutions, for example, are also feasible.
+The excluded PRNs should be separated by whitespace.
 
 \begin{figure}[!hbt]
     \centering
@@ -143,7 +172,11 @@ This section defines the GNSS systems to be used for data processing and the pro
 
 
 \paragraph{observation}
-This section is well explained in the configuration file. Note that the observation noise represents the noise level of the uncombined observations. For ionosphere-free combinations, observation noise will be automatically computed based on the uncombined ones. A screenshot of the example settings is provided in Figure~\ref{fig:conf_observation}.
+This section is documented thoroughly by the comments in the configuration file.
+Note that the observation noise represents the noise level of the uncombined observations;
+for ionosphere-free combinations, the observation noise is computed automatically
+from the uncombined values.
+A screenshot of the example settings is provided in Figure~\ref{fig:conf_observation}.
 
 \begin{figure}[!hbt]
     \centering
@@ -155,9 +188,16 @@ This section is well explained in the configuration file. Note that the observat
 
 
 \paragraph{model}
-This section specifies the tropospheric and ionospheric models. An example is provided in Figure~\ref{fig:conf_model}. Users should choose an option (case sensitive) from the values listed in the comment. Note that this section is not effective for RTK, since tropospheric and ionospheric delays are ignored for short baselines; "iono" can only be IF for PPP.
+This section specifies the tropospheric and ionospheric models.
+An example is provided in Figure~\ref{fig:conf_model}.
+Users should choose an option (case sensitive) from the values listed in the comments.
+Note that this section has no effect for RTK,
+since tropospheric and ionospheric delays are ignored for short baselines;
+"iono" can only be IF for PPP.
 
-Currently, the tide model cannot be configured through \texttt{pppx.ini}. Solid earth tide, ocean tidal loading, and pole tide are applied for PPP whenever possible, but they are not applied for spp/rtk/tdp.
+Currently, the tide model cannot be configured through \texttt{pppx.ini}.
+Solid Earth tide, ocean tidal loading, and pole tide are applied for PPP whenever possible,
+but not for spp/rtk/tdp.
 
 \begin{figure}[!hbt]
     \centering
@@ -170,23 +210,67 @@ Currently, the tide model cannot be configured through \texttt{pppx.ini}. Solid 
 
 \paragraph{estimation}
 
-This is the most important section of the configuration file. Here, you can choose the solution mode (spp/ppp/rtk/tdp), positioning mode (kinematic/static/fixed) and solver (ekf/fgo/lsq) used for adjustment. An example is provided in Figure~\ref{fig:conf_estimation}. Most settings are self-explanatory.
+This is the most important section of the configuration file.
+Here, you can choose the solution mode (spp/ppp/rtk/tdp),
+positioning mode (kinematic/static/fixed), and solver (ekf/fgo/lsq) used for adjustment.
+An example is provided in Figure~\ref{fig:conf_estimation}.
+Most settings are self-explanatory.
 
-The fields \underline{"sol\_mode"}, \underline{"pos\_mode"}, and \underline{"solver"} are well explained in the configuration file. However, spp and tdp can only support the kinematic positioning mode, and not all the solvers are supported for each solution mode (i.e., lsq and fgo for spp and tdp, ekf and fgo for ppp and rtk). The software will output an error message if a specific configuration is not supported.
+The fields \underline{"sol\_mode"}, \underline{"pos\_mode"}, and \underline{"solver"}
+are well explained in the configuration file.
+Note, however, that spp and tdp support only the kinematic positioning mode,
+and not every solver is supported for each solution mode
+(lsq and fgo for spp and tdp; ekf and fgo for ppp and rtk).
+The software will output an error message if a given configuration is not supported.
 
-\underline{"fgo\_var"} controls the output of variance information when fgo is specified as "solver". By default, variances are not computed for fgo since it might be time-consuming.
+\underline{"fgo\_var"} controls the output of variance information
+when fgo is specified as the "solver".
+By default, variances are not computed for fgo, because doing so can be time-consuming.
 
-\underline{"site\_pos"} specifies the approximate station coordinates in XYZ format (unit: meters). If not specified, the approximate coordinates will be automatically computed using SPP. This rule also applies for the field \underline{"base\_pos"} for rtk.
+\underline{"site\_pos"} specifies the approximate station coordinates in XYZ format (unit: meters).
+If not specified, the approximate coordinates are computed automatically using SPP.
+The same rule applies to the field \underline{"base\_pos"} for rtk.
 
-\underline{"ppp\_ar"} is a switch for PPP-AR. Ambiguity resolution can be enabled by setting it to "yes", and a valid phase-bias product must be provided using the field "[product] bia". The LAMBDA and rounding methods are used to resolve integer ambiguities if "solver" is set to "ekf" and "fgo", respectively. Note that GLONASS is disabled for AR and the GPS L5 signal is currently not supported for PPP-AR.
+\underline{"ppp\_ar"} is a switch for PPP-AR.
+Ambiguity resolution is enabled by setting it to "yes", in which case a valid phase-bias product
+must be provided through the field "[product] bia".
+The LAMBDA and rounding methods are used to resolve integer ambiguities
+when "solver" is set to "ekf" and "fgo", respectively.
+Note that GLONASS is disabled for AR
+and that the GPS L5 signal is currently not supported for PPP-AR.
 
-\underline{"sf\_ppp"} is designed to run single-frequency PPP with GIM products, that is, ionospheric delays are not estimated but fixed to GIM corrections. In this way, the accuracy of GIM products can be evaluated. However, dual-frequency observations are still required for cycle slip detection. "ppp\_ar" should be set to "no" when sf\_ppp is enabled.
+\underline{"sf\_ppp"} is designed to run single-frequency PPP with GIM products;
+that is, ionospheric delays are not estimated but fixed to GIM corrections.
+This makes it possible to evaluate the accuracy of GIM products.
+Note that dual-frequency observations are still required for cycle slip detection,
+and "ppp\_ar" should be set to "no" when sf\_ppp is enabled.
 
-\underline{"slip\_det"} specifies the methods used for cycle slip detection for ppp. The option "TDCP" represents the time-differenced carrier phase. You can set "slip\_det" to "ALL" for most stations, but "MW" should not be used for stations with noisy pseudorange, such as smartphones. "LLI" could be problematic at some point, since some stations set a lot of wrong LLI flags, but it is recommended for processing smartphone GNSS data. Note that rtk and tdp always use LLI and GF for cycle slip detection, and currently it is not configurable.
+\underline{"slip\_det"} specifies the methods used for cycle slip detection in ppp.
+The option "TDCP" stands for time-differenced carrier phase.
+You can set "slip\_det" to "ALL" for most stations,
+but "MW" should not be used for stations with noisy pseudorange, such as smartphones.
+"LLI" can be unreliable, because some stations set many incorrect LLI flags,
+yet it is recommended for processing smartphone GNSS data.
+Note that rtk and tdp always use LLI and GF for cycle slip detection,
+which is currently not configurable.
 
-\underline{"pos\_pri"}, \underline{"clk\_pri"}, \underline{"isb\_pri"}, and \underline{"ztd\_pri"} specify a-prior uncertainties and process noises of station position, receiver clock, receiver inter-system bias (ISB), and tropospheric delay for EKF, respectively. Note that only one receiver clock is estimated for one GNSS system, and ISBs are estimated for other systems using EKF. When FGO is chosen as the solver, only "ztd\_pri" is effective, and other "pri" settings are not used. Individual receiver clock errors (instead of ISB) are estimated as white noise for different constellations, and the station position is estimated as white noise for the kinematic mode.
+\underline{"pos\_pri"}, \underline{"clk\_pri"}, \underline{"isb\_pri"},
+and \underline{"ztd\_pri"} specify the a priori uncertainties and process noises
+of the station position, receiver clock, receiver inter-system bias (ISB),
+and tropospheric delay for EKF, respectively.
+Note that EKF estimates receiver clocks for one reference GNSS system
+and estimates ISBs for other systems.
+When FGO is chosen as the solver, only "ztd\_pri" is effective
+and the other "pri" settings are not used:
+an individual receiver clock error (instead of an ISB) is estimated
+as white noise for each constellation,
+and the station position is estimated as white noise in the kinematic mode.
 
-\underline{"rtk\_ar"} is a switch for RTK-AR, with "yes" as its default value. The LAMBDA and rounding methods are used to resolve integer double-differenced (DD) ambiguities if "solver" is set to "ekf" and "fgo", respectively. \underline{"glonass\_ar"} can be set to "yes" for rtk if rover and base stations share the same receiver type. Otherwise, keep it as "no".
+\underline{"rtk\_ar"} is a switch for RTK-AR, with "yes" as its default value.
+The LAMBDA and rounding methods are used to resolve integer double-differenced (DD) ambiguities
+when "solver" is set to "ekf" and "fgo", respectively.
+\underline{"glonass\_ar"} can be set to "yes" for rtk
+if the rover and base stations share the same receiver type; otherwise, keep it as "no".
 
 % [estimation]: slip_det
 % ; only effective for ppp
@@ -207,7 +291,15 @@ The fields \underline{"sol\_mode"}, \underline{"pos\_mode"}, and \underline{"sol
 
 \paragraph{product}
 
-This section specifies the paths to various products. If "src = brdc", then "nav" should be set to a valid path to a broadcast ephemeris. If "src = precise", then "sp3" should be set to a valid path to a SP3 product, and all other products are optional. If you use relative paths for products, the paths are relative to the directory where \pppx{} is executed, not where pppx.ini is located. In addition, placeholders (see Figure~\ref{fig:conf_product}) can be used to specify product names, making it easier to process GNSS data on multiple days. More details on the products are introduced in Section~\ref{sec:input_product}.
+This section specifies the paths to the various products.
+If "src = brdc", then "nav" must be set to a valid path to a broadcast ephemeris.
+If "src = precise", then "sp3" must be set to a valid path to an SP3 product,
+and all other products are optional.
+Relative paths are resolved relative to the directory where \pppx{} is executed,
+not where pppx.ini is located.
+In addition, placeholders (see Figure~\ref{fig:conf_product}) can be used in product names,
+making it easier to process GNSS data over multiple days.
+More details on the products are given in Section~\ref{sec:input_product}.
 
 \begin{figure}[!hbt]
     \centering
@@ -219,7 +311,10 @@ This section specifies the paths to various products. If "src = brdc", then "nav
 
 
 \paragraph{table}
-This section specifies the paths to the table files.  An example is provided in Figure~\ref{fig:conf_table}. More details can be found in Section~\ref{sec:input_table}. If you use relative paths for the tables, the paths in the configuration are relative to the directory where \pppx{} is executed.
+This section specifies the paths to the table files.
+An example is provided in Figure~\ref{fig:conf_table}.
+More details can be found in Section~\ref{sec:input_table}.
+As with products, relative paths are resolved relative to the directory where \pppx{} is executed.
 
 \begin{figure}[!hbt]
     \centering
@@ -231,7 +326,9 @@ This section specifies the paths to the table files.  An example is provided in 
 
 
 \paragraph{output}
-This section specifies the output path and log level. An example is provided in Figure~\ref{fig:conf_output}. More details can be found in Section~\ref{sec:output}.
+This section specifies the output path and log level.
+An example is provided in Figure~\ref{fig:conf_output}.
+More details can be found in Section~\ref{sec:output}.
 
 \begin{figure}[!hbt]
     \centering
@@ -246,21 +343,30 @@ This section specifies the output path and log level. An example is provided in 
 \subsubsection{Product}
 \label{sec:input_product}
 
-There are two options of satellite products for each solution mode: "brdc" and "precise", controlled by the configuration field: "[product] src". The "brdc" option uses satellite orbits and clocks computed from broadcast ephemeris, whereas the "precise" option uses orbits and clocks from IGS precise products. Note that "[table] igsatx" is required if "[product] src" is set to "precise".
+There are two options for satellite products in each solution mode, "brdc" and "precise",
+controlled by the configuration field "[product] src".
+The "brdc" option uses satellite orbits and clocks computed from broadcast ephemeris,
+whereas the "precise" option uses orbits and clocks from IGS precise products.
+Note that "[table] igsatx" is required when "[product] src" is set to "precise".
 
 Here are some clarifications:
 
 \begin{itemize}[]
     \item All products labeled "precise" will not be used if "[product] src" is set to "brdc"
-    \item Precise orbits and clocks can be used for SPP, but the Differential Code Bias (DCB) issue is not handled for single-frequency SPP. In this case, it is recommended to set "[model] iono = IF"
-    \item Only the SP3 file is necessary for the "precise" option. Other precise products are optional. If the CLK product is missing, the clock corrections from the SP3 file will be used
+    \item Precise orbits and clocks can be used for SPP, but the Differential Code Bias (DCB)
+          issue is not handled for single-frequency SPP; in this case, it is recommended to set
+          "[model] iono = IF"
+    \item Only the SP3 file is required for the "precise" option; other precise products are
+          optional. If the CLK product is missing, the clock corrections from the SP3 file are used
     \item "ion" and "vmf" are only mandatory when the corresponding models are specified
     \item PPP specific:
     \begin{itemize}[noitemsep]
-        \item Broadcast ephemeris can also be used for PPP. Precise products will not be used in this case
-        \item The nominal attitude will be used if the OBX product is missing
-        \item The BIA product will be used if "[estimation] ppp\_ar" is set to "yes"
-        \item Pole tide corrections will not be applied if the ERP product is missing, but this is fine for most applications.
+        \item Broadcast ephemeris can also be used for PPP;
+              precise products are not used in this case
+        \item The nominal attitude is used if the OBX product is missing
+        \item The BIA product is used if "[estimation] ppp\_ar" is set to "yes"
+        \item Pole tide corrections are not applied if the ERP product is missing,
+              but this is fine for most applications
     \end{itemize}
 \end{itemize}
 
@@ -269,7 +375,10 @@ Here are some clarifications:
 \subsubsection{Table}
 \label{sec:input_table}
 
-Several table files are required when specific models are used for data processing. These mainly include the antenna model, the tropospheric model, and the tide model. A complete list of the required table files is provided in Table~\ref{tab:table}. The instructions for downloading each table file are provided in Appendix~\ref{app:table}. 
+Several table files are required when specific models are used for data processing.
+These mainly include the antenna model, the tropospheric model, and the tide model.
+A complete list of the required table files is provided in Table~\ref{tab:table}.
+The instructions for downloading each table file are provided in Appendix~\ref{app:table}.
 
 \begin{table}[!hbt]
     \centering
@@ -291,21 +400,29 @@ Several table files are required when specific models are used for data processi
 Some clarifications are provided below:
 
 \begin{itemize}[]
-    \item "channel" is only needed when GLONASS carrier phase measurements are used for data processing (i.e., ppp/rtk/tdp)
-    \item "gpt2w" should be set when "[model] trop" is set to "GPT2w"
-    \item "igsatx" is mandatory if "[product] src" is set to "precise". When "igstax" is specified, the satellite and station PCO corrections will be applied for all "sol\_mode", but the satellite and station PCV corrections will only be applied for PPP and RTK.
-    \item "oceanload" is optional. Ocean tide loading will not be corrected if coefficients for the processed station are missing
+    \item "channel" is only needed when GLONASS carrier phase measurements are used for data
+          processing (i.e., ppp/rtk/tdp)
+    \item "gpt2w" must be set when "[model] trop" is set to "GPT2w"
+    \item "igsatx" is mandatory if "[product] src" is set to "precise".
+          When "igsatx" is specified, the satellite and station PCO corrections are applied for
+          all solution modes, but the satellite and station PCV corrections are applied only for
+          PPP and RTK.
+    \item "oceanload" is optional; ocean tide loading is not corrected
+          if the coefficients for the processed station are missing
     \item "orography" is needed when "[model] trop" is set to "VMF1"
 \end{itemize}
 
-Although table files are not always required, it is recommended to properly set all table paths to simplify the process and avoid potential issues.
+Although table files are not always required, it is recommended to properly set all table paths
+to simplify the process and avoid potential issues.
 
 
 
 \subsection{Output}
 \label{sec:output}
 
-This section introduces the output files generated by the \pppx{} software. An overview of these files is provided in Table~\ref{tab:output}. The function and format of each file are described in detail in the following sections.
+This section introduces the output files generated by the \pppx{} software.
+An overview of these files is provided in Table~\ref{tab:output}.
+The function and format of each file are described in detail in the following sections.
 
 \begin{table}[!hbt]
     \centering
@@ -316,7 +433,7 @@ This section introduces the output files generated by the \pppx{} software. An o
         Output & Description \\
     \midrule
     pos file & Receiver position, clock (GPS) and ZTD estimates for each epoch \\
-    log file & Information for debugging, including cycle slip detection, a-prior and post-fit residuals, and ambiguity resolution \\
+    log file & Information for debugging, including cycle slip detection, a priori and post-fit residuals, and ambiguity resolution \\
     stat file & Post-fit residuals and various estimates in the RTKLIB stat format, intended for visualization with RTKLIB \\
     \bottomrule
     \end{tabular}
@@ -327,9 +444,17 @@ This section introduces the output files generated by the \pppx{} software. An o
 \subsubsection{pos file}
 \label{sec:output_pos}
 
-The primary output of \pppx{} is the pos file, which contains the main estimates for each processed epoch. These include station coordinates in the Earth-centered and Earth-fixed (ECEF) coordinate system, standard deviations of the coordinate estimates, receiver clock errors for the GPS system, and Zenith Total Delays (ZTD).
+The primary output of \pppx{} is the pos file,
+which contains the main estimates for each processed epoch.
+These include station coordinates in the Earth-centered and Earth-fixed (ECEF) coordinate system,
+standard deviations of the coordinate estimates, receiver clock errors for the GPS system,
+and Zenith Total Delays (ZTD).
 
-Figure~\ref{fig:output_pos} shows the beginning part of a sample pos file. The units used for coordinates, clock errors, and ZTD estimates are meters. Note that the coordinate system will align with the satellite orbit products used for data processing. By default, the standard deviations of coordinates are not included in the output when "fgo" is selected as the solver, because of the long computation time required.
+Figure~\ref{fig:output_pos} shows the beginning of a sample pos file.
+The units used for coordinates, clock errors, and ZTD estimates are meters.
+Note that the coordinate system aligns with the satellite orbit products used for data processing.
+By default, the standard deviations of coordinates are not included in the output
+when "fgo" is selected as the solver, because of the long computation time required.
 
 \begin{figure}[!hbt]
     \centering
@@ -345,9 +470,23 @@ Figure~\ref{fig:output_pos} shows the beginning part of a sample pos file. The u
 \subsubsection{log file}
 \label{sec:output_log}
 
-A log file will be generated if the "[output] level" in the configuration file is not set to "off". This file contains debugging information such as cycle slip detection, outlier detection, and a-prior and post-fit residuals. Each log message generally begins with a letter that indicates the message type: 'T' for Trace, 'D' for Debug, 'I' for Information, 'W' for Warning, 'E' for Error, and 'C' for critical. 
+A log file will be generated if the "[output] level" in the configuration file is not set to "off".
+This file contains debugging information such as cycle slip detection, outlier detection,
+and a-prior and post-fit residuals.
+Each log message generally begins with a letter that indicates the message type:
+'T' for Trace, 'D' for Debug, 'I' for Information, 'W' for Warning,
+'E' for Error, and 'C' for Critical.
 
-Figure~\ref{fig:output_log} shows the screenshot of a sample log file. For example, a cycle slip was detected at epoch 86370.0 (seconds of the day). Following the PRN number, the azimuth, elevation, and between-epoch difference of the geometry-free (GF) combination of the satellite are provided. The subsequent line indicates that a new ambiguity parameter (numbered 410) was introduced at that epoch. The following lines provide information for all satellites available at that epoch. These include the a-prior residuals of pseudorange and carrier phase, the corresponding post-fit residuals, ambiguity estimates in cycles, as well as the azimuth and elevation for each satellite, listed after its PRN and epoch time.
+Figure~\ref{fig:output_log} shows the screenshot of a sample log file.
+For example, a cycle slip was detected at epoch 86370.0 (seconds of the day).
+Following the PRN number, the azimuth, elevation, and between-epoch difference
+of the geometry-free (GF) combination of the satellite are provided.
+The subsequent line indicates that a new ambiguity parameter (numbered 410)
+was introduced at that epoch.
+The following lines provide information for all satellites available at that epoch.
+For each satellite, listed after its PRN and epoch time, these include the a priori residuals
+of pseudorange and carrier phase, the corresponding post-fit residuals,
+the ambiguity estimate in cycles, and the azimuth and elevation.
 
 \begin{figure}[!hbt]
     \centering
@@ -362,7 +501,14 @@ Figure~\ref{fig:output_log} shows the screenshot of a sample log file. For examp
 \subsubsection{stat file}
 \label{sec:output_stat}
 
-A stat file is always generated for visualization with the \href{https://github.com/tomojitakasu/RTKLIB_bin/tree/rtklib_2.4.3}{RTKLIB} software. For detailed information on the format, you can refer to the RTKLIB \href{https://github.com/tomojitakasu/RTKLIB/blob/rtklib_2.4.3/src/rtkpos.c#L107}{source code}. Currently, \pppx{} only outputs messages with the keywords "\$POS", "\$CLK", and "\$SAT". The only difference is that the "\$CLK" values are expressed in meters (instead of nanoseconds) and represent absolute clock errors for each GNSS system (rather than inter-system biases). Figure~\ref{fig:output_stat} shows a screenshot of a sample stat file.
+A stat file is always generated for visualization with the
+\href{https://github.com/tomojitakasu/RTKLIB_bin/tree/rtklib_2.4.3}{RTKLIB} software.
+For detailed information on the format, you can refer to the RTKLIB
+\href{https://github.com/tomojitakasu/RTKLIB/blob/rtklib_2.4.3/src/rtkpos.c#L107}{source code}.
+Currently, \pppx{} only outputs messages with the keywords "\$POS", "\$CLK", and "\$SAT".
+The only difference is that the "\$CLK" values are expressed in meters (instead of nanoseconds)
+and represent absolute clock errors for each GNSS system (rather than inter-system biases).
+Figure~\ref{fig:output_stat} shows a screenshot of a sample stat file.
 
 \begin{figure}[!hbt]
     \centering
@@ -382,7 +528,13 @@ This section explains how to visualize the solutions generated by \pppx{}.
 \subsubsection{With Python}
 \label{sec:visualization_python}
 
-A Python script named "plot\_ppppos.py" is included in the software package and is located in the "scripts/" folder. This script can generate plots of either (1) the positioning time series in the east, north, and up components (relative to the mean position) or (2) additional time series of the receiver clock and ZTD estimates. The general usage of the script is demonstrated with the commands below, and the corresponding figures are shown in Figure~\ref{fig:visiualization_python}:
+A Python script named "plot\_ppppos.py" is included in the software package
+and is located in the "scripts/" folder.
+This script can generate plots of either (1) the positioning time series in the east, north,
+and up components (relative to the mean position)
+or (2) additional time series of the receiver clock and ZTD estimates.
+The general usage of the script is demonstrated with the commands below,
+and the corresponding figures are shown in Figure~\ref{fig:visiualization_python}:
 
 \begin{minted}[frame=leftline]{bash}
   # (1) plot position estimates only
@@ -420,9 +572,13 @@ A Python script named "plot\_ppppos.py" is included in the software package and 
 \subsubsection{With RTKLIB}
 \label{sec:visualization_rtklib}
 
-The \href{https://github.com/tomojitakasu/RTKLIB_bin/tree/rtklib_2.4.3}{RTKLIB} software is recommended for an enhanced interactive view of various plots and visualization of post-fit residuals. However, a limitation is that the author of RTKLIB provides executables only for Windows users. Linux users need to compile the GUI applications themselves using the Qt library.
+The \href{https://github.com/tomojitakasu/RTKLIB_bin/tree/rtklib_2.4.3}{RTKLIB} software is
+recommended for a richer interactive view of the various plots
+and for visualizing post-fit residuals.
+One limitation is that the author of RTKLIB provides executables only for Windows;
+Linux users must compile the GUI applications themselves using the Qt library.
 
-Using RTKLIB for visualization is straightforward: 
+Using RTKLIB for visualization is straightforward:
 
 \begin{enumerate}
     \item Open the application "rtkplot.exe"
@@ -430,7 +586,8 @@ Using RTKLIB for visualization is straightforward:
     \item Interactively view the various plots
 \end{enumerate}
 
-Figure~\ref{fig:visiualization_rtklib} shows some example visualizations. A useful tip: you can open two solutions within the same window for easy comparison.
+Figure~\ref{fig:visiualization_rtklib} shows some example visualizations.
+A useful tip: you can open two solutions within the same window for easy comparison.
 
 \begin{figure}
 \captionsetup[subfigure]{justification=Centering}
