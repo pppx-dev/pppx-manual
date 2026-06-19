@@ -3,7 +3,7 @@
 This section introduces the system requirements and installation steps for \pppx{}
 on the supported platforms (Linux, macOS, and Windows).
 
-%To download the latest version of \pppx{}, please have a look on \href{https://github.com/YuanxinPan/PPPx_bin/releases}{this page}. Note that only the dynamically linked version of \pppx{} is provided for macOS and Windows, but a statically linked version called \texttt{pppx\_static} is additionally provided for Linux.
+%To download the latest version of \pppx{}, please have a look on \href{https://github.com/pppx-dev/pppx/releases}{this page}. Note that only the dynamically linked version of \pppx{} is provided for macOS and Windows, but a statically linked version called \texttt{pppx\_static} is additionally provided for Linux.
 
 
 
@@ -63,7 +63,7 @@ Run this single command to automatically download and install the latest release
 to \verb|~/.local/bin|:
 
 \begin{minted}[frame=leftline]{bash}
-curl -sL https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/pppx-dev/pppx/main/install.sh | bash
 \end{minted}
 
 
@@ -71,8 +71,8 @@ curl -sL https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.sh |
 
 If you prefer not to use the automated script, you can install \pppx{} manually:
 \begin{enumerate}
-    \item Download the \texttt{pppx\_v1.x.x\_linux\_x86\_64.zip} asset from the latest
-          \href{https://github.com/YuanxinPan/PPPx_bin/releases}{Release}.
+    \item Download the \texttt{pppx\-1.x.x\-linux\-x86\_64.zip} asset from the latest
+          \href{https://github.com/pppx-dev/pppx/releases}{Release}.
     \item Extract the archive to obtain the \pppx{} executable.
     \item Open your terminal and navigate to your download folder.
     \item Make the file executable and move it to your user binary folder:
@@ -106,7 +106,7 @@ It will automatically download the executable, fetch the required DLLs, and add 
 (\path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}) to your system \texttt{PATH}:
 
 \begin{minted}[frame=leftline]{bash}
-irm https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/pppx-dev/pppx/main/install.ps1 | iex
 \end{minted}
 
 \textbf{Note}: You must restart PowerShell or cmd.exe after the installation.
@@ -116,10 +116,10 @@ irm https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.ps1 | iex
 
 If you prefer not to use the automated script, you can install \pppx{} manually:
 \begin{enumerate}
-    \item Download \texttt{pppx\_v1.x.x\_windows\_x86\_64.zip} from the latest
-          \href{https://github.com/YuanxinPan/PPPx_bin/releases}{Release}.
+    \item Download \texttt{pppx\-1.x.x\-windows\-x86\_64.zip} from the latest
+          \href{https://github.com/pppx-dev/pppx/releases}{Release}.
     \item Download the required Windows DLLs via this
-          \href{https://github.com/YuanxinPan/PPPx_bin/releases/download/v1.2.1/pppx_winows_dlls.zip}{link}.
+          \href{https://github.com/pppx-dev/pppx/releases/download/v1.2.1/pppx_windows_dlls.zip}{link}.
     \item Create the PPPx folder: \path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}
     \item Extract both archives and place the \texttt{.dll} files and \texttt{pppx.exe}
           in the PPPx folder.
@@ -142,7 +142,7 @@ If you prefer not to use the automated script, you can install \pppx{} manually:
 %   $ pacman -Syu   # update package library
 %   $ pacman -S git mingw-w64-x86_64-ceres-solver
 
-%   $ git clone git@github.com:YuanxinPan/PPPx_bin.git
+%   $ git clone git@github.com:pppx-dev/pppx.git
 %   $ mkdir -p ${HOME}/.local/bin/
 %   $ cp pppx.exe ${HOME}/.local/bin/
 % \end{minted}
@@ -177,7 +177,7 @@ Run this command in your Terminal to automatically download the latest release,
 bypass Apple's quarantine security check, and install it to \verb|~/.local/bin/|:
 
 \begin{minted}[frame=leftline]{bash}
-curl -sL https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/pppx-dev/pppx/main/install.sh | bash
 \end{minted}
 
 
@@ -185,8 +185,8 @@ curl -sL https://raw.githubusercontent.com/YuanxinPan/PPPx_bin/main/install.sh |
 
 If you prefer not to use the automated script, you can install \pppx{} manually:
 \begin{enumerate}
-    \item Download the \texttt{pppx\_v1.x.x\_macos\_arm64.zip} asset from the latest
-          \href{https://github.com/YuanxinPan/PPPx_bin/releases}{Release}.
+    \item Download the \texttt{pppx\-1.x.x\-macos\-arm64.zip} asset from the latest
+          \href{https://github.com/pppx-dev/pppx/releases}{Release}.
     \item Extract the archive to obtain the \pppx{} executable.
     \item Open the Terminal application and navigate to your download folder.
     \item Move the \pppx{} executable to \verb|~/.local/bin/| using Terminal:
