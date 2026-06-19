@@ -1,3 +1,12 @@
+%% softwaremanual.cls
+%%
+%% Derived from the Overleaf "Software Manual and Technical Document Template".
+%% This file is distributed under the LaTeX Project Public License, version
+%% 1.3c (LPPL 1.3c).
+%%
+%% The authored content of this manual is licensed separately under
+%% CC BY-NC 4.0; see the LICENSE and NOTICE files.
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{softwaremanual}[2021/05/17 v1.1 Overleaf Software Manual Template]
 % sample software documentation format

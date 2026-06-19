@@ -1,0 +1,28 @@
+PPPx User Manual
+================
+
+Copyright (c) 2021-2026 Yuanxin Pan
+
+This repository contains the documentation (user manual) for PPPx and is
+licensed under two distinct sets of terms:
+
+1. Authored manual content
+   ------------------------
+   The manual content authored for this project -- the text in `src/`, the
+   figures in `figs/`, and the document body in `main.tex` -- is licensed under
+   the Creative Commons Attribution-NonCommercial 4.0 International License
+   (CC BY-NC 4.0). See the `LICENSE` file for the full text.
+
+   In short: you may share and adapt this material for non-commercial purposes,
+   provided you give appropriate attribution. Commercial use is not permitted.
+
+2. Template file (`softwaremanual.cls`)
+   ------------------------------------
+   `softwaremanual.cls` is derived from the Overleaf "Software Manual and
+   Technical Document Template" and remains licensed under the LaTeX Project
+   Public License, version 1.3c (LPPL 1.3c).
+
+Note: PPPx, the software documented here, is a separate work distributed under
+its own terms (a closed-source binary, free for academic, research, and
+educational use only). The licenses above apply to this manual/documentation
+only, not to the PPPx software itself. See https://github.com/pppx-dev/pppx.
