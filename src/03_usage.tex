@@ -34,8 +34,12 @@ The recommended steps to use this wrapper script are:
   $ pppx.sh -c pppx.ini rinex/ZIM200CHE_R_20221000000_01D_30S_MO.rnx
 \end{minted}
 
-\textbf{NOTE}: Before first use, "scripts/pppx.sh" must be edited manually, setting the variable
-"TABLE\_DIR" (line \#42) to the actual "table" folder of the \pppx{} software package.
+\textbf{NOTE}: \texttt{pppx.sh} is installed and configured automatically by the installer
+(\texttt{install.sh} on Linux/macOS, \texttt{install.ps1} on Windows), pointing it at the
+\texttt{table} folder in your cloned repository, so \texttt{pppx.sh -c ...} works out of the
+box. It runs natively on Linux and macOS, and on Windows via Git Bash. It requires only
+\texttt{curl} and standard Unix tools (no \texttt{wget} needed), which are available by
+default on these platforms.
 
 
 

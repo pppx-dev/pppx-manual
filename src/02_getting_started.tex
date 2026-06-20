@@ -57,36 +57,18 @@ You can easily check your system's \texttt{glibc} version
 by running the \texttt{ldd --version} command in your terminal.
 
 
-\paragraph{Option 1: Automated Installation (Recommended)}
-
-Run this single command to automatically download and install the latest release
-to \verb|~/.local/bin|:
+Clone the repository and run the installer from its root folder:
 
 \begin{minted}[frame=leftline]{bash}
-curl -sL https://raw.githubusercontent.com/pppx-dev/pppx/main/install.sh | bash
+git clone --depth 1 https://github.com/pppx-dev/pppx.git
+cd pppx
+./install.sh
 \end{minted}
 
-
-\paragraph{Option 2: Manual Installation}
-
-If you prefer not to use the automated script, you can install \pppx{} manually:
-\begin{enumerate}
-    \item Download the \texttt{pppx\-1.x.x\-linux\-x86\_64.zip} asset from the latest
-          \href{https://github.com/pppx-dev/pppx/releases}{Release}.
-    \item Extract the archive to obtain the \pppx{} executable.
-    \item Open your terminal and navigate to your download folder.
-    \item Make the file executable and move it to your user binary folder:
-\end{enumerate}
-
-\begin{minted}[frame=leftline]{bash}
-chmod +x pppx
-mkdir -p ~/.local/bin
-mv pppx ~/.local/bin/pppx
-
-# Restart your terminal and run `pppx` to test if it works
-# If not, add `~/.local/bin` to PATH via the command below:
-echo "export PATH=\${HOME}/.local/bin:\$PATH" >> ~/.bashrc
-\end{minted}
+The installer downloads the latest \pppx{} executable, installs both \pppx{} and the
+wrapper script \texttt{pppx.sh} to \verb|~/.local/bin|, and configures \texttt{pppx.sh}
+to use the \texttt{table} files in the cloned repository. Keeping the repository is
+recommended, as it provides the \texttt{table} files and examples used by \pppx{}.
 
 
 
@@ -99,34 +81,29 @@ However, \pppx{} can also run natively on Windows
 using PowerShell or Command Prompt (\texttt{cmd.exe}).
 
 
-\paragraph{Option 1: Automated Installation (Recommended)}
+Clone the repository, then run the installer from its root folder in PowerShell.
+It will download the executable, fetch the required DLLs, and add the software
+(\path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}) to your user \texttt{PATH}:
 
-Open PowerShell and run this command.
-It will automatically download the executable, fetch the required DLLs, and add the software
-(\path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}) to your system \texttt{PATH}:
-
-\begin{minted}[frame=leftline]{bash}
-irm https://raw.githubusercontent.com/pppx-dev/pppx/main/install.ps1 | iex
+\begin{minted}[frame=leftline]{powershell}
+git clone --depth 1 https://github.com/pppx-dev/pppx.git
+cd pppx
+.\install.ps1
 \end{minted}
 
-\textbf{Note}: You must restart PowerShell or cmd.exe after the installation.
+\textbf{Note}: You must restart PowerShell, cmd.exe, or Git Bash after the installation.
 
+The installer also installs and configures the wrapper script \texttt{pppx.sh}
+(pointing it at the \texttt{table} folder in the cloned repository). While \texttt{pppx.sh}
+cannot run in PowerShell or \texttt{cmd.exe}, you can run it from \textbf{Git Bash}, which
+is bundled with \href{https://git-scm.com/download/win}{Git for Windows} (the same tool
+used for \texttt{git clone}). Product downloads rely on \texttt{curl}, which Git Bash
+provides:
 
-\paragraph{Option 2: Manual Installation}
-
-If you prefer not to use the automated script, you can install \pppx{} manually:
-\begin{enumerate}
-    \item Download \texttt{pppx\-1.x.x\-windows\-x86\_64.zip} from the latest
-          \href{https://github.com/pppx-dev/pppx/releases}{Release}.
-    \item Download the required Windows DLLs via this
-          \href{https://github.com/pppx-dev/pppx/releases/download/v1.2.1/pppx_windows_dlls.zip}{link}.
-    \item Create the PPPx folder: \path{C:\Users\<YOUR_USER_NAME>\AppData\Local\Programs\PPPx}
-    \item Extract both archives and place the \texttt{.dll} files and \texttt{pppx.exe}
-          in the PPPx folder.
-    \item Add the absolute path of this folder to your Windows \texttt{PATH} environment variable.
-    \item Open PowerShell or Command Prompt and type \texttt{pppx.exe}
-          to test if it is correctly installed.
-\end{enumerate}
+\begin{minted}[frame=leftline]{bash}
+# In Git Bash
+pppx.sh -c pppx.ini rinex/ZIM200CHE_R_20221000000_01D_30S_MO.rnx
+\end{minted}
 
 
 % \paragraph{With MSYS2}
@@ -172,36 +149,16 @@ brew install ceres-solver
 \end{minted}
 
 
-\paragraph{Option 1: Automated Installation (Recommended)}
-Run this command in your Terminal to automatically download the latest release,
-bypass Apple's quarantine security check, and install it to \verb|~/.local/bin/|:
+Clone the repository and run the installer from its root folder in the Terminal:
 
 \begin{minted}[frame=leftline]{bash}
-curl -sL https://raw.githubusercontent.com/pppx-dev/pppx/main/install.sh | bash
+git clone --depth 1 https://github.com/pppx-dev/pppx.git
+cd pppx
+./install.sh
 \end{minted}
 
-
-\paragraph{Option 2: Manual Installation}
-
-If you prefer not to use the automated script, you can install \pppx{} manually:
-\begin{enumerate}
-    \item Download the \texttt{pppx\-1.x.x\-macos\-arm64.zip} asset from the latest
-          \href{https://github.com/pppx-dev/pppx/releases}{Release}.
-    \item Extract the archive to obtain the \pppx{} executable.
-    \item Open the Terminal application and navigate to your download folder.
-    \item Move the \pppx{} executable to \verb|~/.local/bin/| using Terminal:
-
-\begin{minted}[frame=leftline]{bash}
-chmod +x pppx
-mkdir -p ~/.local/bin
-mv pppx ~/.local/bin/
-
-echo "export PATH=\${HOME}/.local/bin:\$PATH" >> ~/.zshrc
-\end{minted}
-
-    \item Due to Apple's Gatekeeper security settings, you must authorize the software before
-          it will run. You can do this by running
-          \texttt{xattr -d com.apple.quarantine \char`\~/.local/bin/pppx} or by following this
-          \href{https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac}{Apple Support Guide}.
-    \item Restart your Terminal and run \pppx{} to test if it is correctly installed.
-\end{enumerate}
+The installer downloads the latest \pppx{} executable, bypasses Apple's quarantine
+security check, installs both \pppx{} and the wrapper script \texttt{pppx.sh} to
+\verb|~/.local/bin|, and configures \texttt{pppx.sh} to use the \texttt{table} files in
+the cloned repository. Keeping the repository is recommended, as it provides the
+\texttt{table} files and examples used by \pppx{}.
